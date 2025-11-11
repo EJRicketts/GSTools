@@ -260,6 +260,7 @@ class TestTreePGS(unittest.TestCase):
 
         # Test computing P and then lithotype without passing tree again
         P = pgs(tree=config)
+        self.assertEqual(P.shape, (n1, n2))
         L2 = pgs.compute_lithotype()
         self.assertEqual(L2.shape, (n1, n2))
         self.assertTrue(np.all((L2 == 0) | (L2 == 1)))
@@ -281,12 +282,6 @@ class TestTreePGS(unittest.TestCase):
 
         # Test error when trying to compute lithotype without tree
         self.assertRaises(ValueError, pgs.compute_lithotype)
-
-        # Test error when both lithotypes and tree provided
-        lithotypes = np.ones((n, n))
-        config = {
-            "root": {"type": "leaf", "action": 0},
-        }
 
     def test_tree_config_missing_root(self):
         """Test that tree config without root raises error."""

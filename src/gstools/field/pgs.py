@@ -58,9 +58,13 @@ class PGS:
         for d in range(1, dim):
             try:
                 if not fields[0].shape == fields[d].shape:
-                    raise ValueError("PGS: Not all fields have the same shape.")
-            except AttributeError:
-                raise ValueError("PGS: Not all fields have the same shape.")
+                    raise ValueError(
+                        "PGS: Not all fields have the same shape."
+                    )
+            except AttributeError as exc:
+                raise ValueError(
+                    "PGS: Not all fields have the same shape."
+                ) from exc
         self._dim = dim
         self._fields = np.array(fields)
         self._lithotypes = None
