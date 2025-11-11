@@ -7,7 +7,7 @@ matches the number of fields that are supplied. However, this is not a
 requirement of the PGS algorithm. In fact, it is possible to use multiple
 spatial random fields in PGS, which can be useful for more complex lithotype
 definitions. In this example, we will demonstrate how to use multiple SRFs in
-PGS. In GSTools, this is done by utlising the tree based architecture.
+PGS. In GSTools, this is done by utilising the tree based architecture.
 
 Typically, PGS in two dimensions is carried out as a bigaussian simulation,
 where two random fields are used. Here, we will employ four. We begin by
