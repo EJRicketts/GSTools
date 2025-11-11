@@ -91,7 +91,7 @@ class PGS:
             `fields`, as indices are automatically scaled. Mutually exclusive
             with `tree`.
         tree : dict, optional
-            Configuration dict for constructing a DecisionTree. Must contain
+            Configuration dict for constructing a :any:`DecisionTree`. Must contain
             node specifications. Mutually exclusive with `lithotypes`.
 
         Returns
@@ -160,17 +160,17 @@ class PGS:
 
     def compute_lithotype(self, tree=None):
         """
-        Compute lithotype from input SRFs using a decision tree.
+        Compute lithotype from input SRFs using a :any:`DecisionTree`.
 
         If `self._tree` is not set, a tree configuration must be provided via
-        the `tree` argument. The method then builds or reuses the decision tree
+        the `tree` argument. The method then builds or reuses the :any:`DecisionTree`
         and applies it to the coordinates of the plurigaussian fields to assign
         a lithotype phase at each point.
 
         Parameters
         ----------
         tree : dict or None, optional
-            Configuration for the decision tree. If None, `self._tree` must
+            Configuration for the :any:`DecisionTree`. If None, `self._tree` must
             already be defined. Defaults to None.
 
         Returns
@@ -182,7 +182,7 @@ class PGS:
         Raises
         ------
         ValueError
-            If no decision tree is available or if `self._dim` does not equal
+            If no :any:`DecisionTree` is available or if `self._dim` does not equal
             the number of provided fields.
         """
         if self._tree is None and tree is None:
@@ -287,7 +287,7 @@ class PGS:
         """
         Build and traverse a decision tree for assigning lithotype labels.
 
-        This class constructs a tree of DecisionNode and LeafNode instances
+        This class constructs a tree of :any:`DecisionNode` and :any:`LeafNode` instances
         from a configuration mapping. Once built, it can classify input data
         by following the decision branches to a leaf action.
 
@@ -302,8 +302,8 @@ class PGS:
             - For leaf nodes:
         Notes
         -----
-        - Call `build_tree()` to link nodes and obtain the root before using
-        `decide()`.
+        - Call :py:meth:`build_tree` to link nodes and obtain the root before using
+        :py:meth:`decide`.
         - The tree is immutable once built; rebuild to apply a new config.
         """
 
@@ -315,12 +315,12 @@ class PGS:
             """
             Construct the decision tree structure from the configuration.
 
-            Iterates through the config to create DecisionNode and LeafNode
+            Iterates through the config to create :any:`DecisionNode` and :any:`LeafNode`
             instances, then links decision nodes to their yes/no branches.
 
             Returns
             -------
-            root : DecisionNode or LeafNode
+            root : :any:`DecisionNode` or :any:`LeafNode`
                 The root node of the constructed decision tree.
 
             Raises
@@ -355,18 +355,18 @@ class PGS:
             ----------
             data : dict
                 A mapping of feature names to values, passed to decision functions
-                in each DecisionNode.
+                in each :any:`DecisionNode`.
 
             Returns
             -------
             result
-                The action value from the reached LeafNode, or None if a branch
+                The action value from the reached :any:`LeafNode`, or None if a branch
                 is missing.
 
             Raises
             ------
             ValueError
-                If the tree has not been built (i.e., `build_tree` not called).
+                If the tree has not been built (i.e., :py:meth:`build_tree` not called).
             """
             if self._tree:
                 return self._tree.decide(data)
@@ -376,9 +376,9 @@ class PGS:
             """
             Internal node that evaluates a condition and routes to child branches.
 
-            A DecisionNode wraps a boolean function and two optional branches
-            (yes_branch and no_branch), which may be further DecisionNode or
-            LeafNode instances.
+            A :any:`DecisionNode` wraps a boolean function and two optional branches
+            (yes_branch and no_branch), which may be further :any:`DecisionNode` or
+            :any:`LeafNode` instances.
 
             Parameters
             ----------
@@ -386,11 +386,11 @@ class PGS:
                 A function that evaluates a condition on the input data.
                 Must accept `data` as first argument and keyword args.
             args : dict
-                Keyword arguments to pass to `func` when called.
-            yes_branch : DecisionNode or LeafNode, optional
-                Node to traverse if `func(data, **args)` returns True.
-            no_branch : DecisionNode or LeafNode, optional
-                Node to traverse if `func(data, **args)` returns False.
+                Keyword arguments to pass to :py:attr:`func` when called.
+            yes_branch : :any:`DecisionNode` or :any:`LeafNode`, optional
+                Node to traverse if :py:attr:`func` ``(data, **args)`` returns True.
+            no_branch : :any:`DecisionNode` or :any:`LeafNode`, optional
+                Node to traverse if :py:attr:`func` ``(data, **args)`` returns False.
             """
 
             def __init__(self, func, args, yes_branch=None, no_branch=None):
@@ -406,12 +406,12 @@ class PGS:
                 Parameters
                 ----------
                 data : dict
-                    Feature mapping passed to `func`.
+                    Feature mapping passed to :py:attr:`func`.
 
                 Returns
                 -------
                 result
-                    The outcome of the subsequent node's `decide` method, or None
+                    The outcome of the subsequent node's :py:meth:`decide` method, or None
                     if the respective branch is not set.
                 """
                 if self.func(data, **self.args):
@@ -426,8 +426,8 @@ class PGS:
             """
             Terminal node that returns a stored action when reached.
 
-            A LeafNode represents the outcome of a decision path. Its `action`
-            value is returned directly by `decide()`
+            A :any:`LeafNode` represents the outcome of a decision path. Its :py:attr:`action`
+            value is returned directly by :py:meth:`decide`
 
             Parameters
             ----------
